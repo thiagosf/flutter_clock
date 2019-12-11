@@ -17,29 +17,37 @@ enum _Element {
   restDate,
 }
 
+final _fontFamily = 'Montserrat';
+
 final _baseTheme = {
   _Element.hour: TextStyle(
-    fontSize: 220,
+    fontFamily: _fontFamily,
+    fontSize: 180,
     fontWeight: FontWeight.w900,
   ),
   _Element.minute: TextStyle(
+    fontFamily: _fontFamily,
     fontSize: 120,
     fontWeight: FontWeight.w400,
   ),
   _Element.location: TextStyle(
-    fontSize: 16,
+    fontFamily: _fontFamily,
+    fontSize: 14,
     fontWeight: FontWeight.w400,
   ),
   _Element.temperature: TextStyle(
-    fontSize: 32,
+    fontFamily: _fontFamily,
+    fontSize: 26,
     fontWeight: FontWeight.w900,
   ),
   _Element.weekName: TextStyle(
-    fontSize: 16,
+    fontFamily: _fontFamily,
+    fontSize: 14,
     fontWeight: FontWeight.w900,
   ),
   _Element.restDate: TextStyle(
-    fontSize: 16,
+    fontFamily: _fontFamily,
+    fontSize: 14,
     fontWeight: FontWeight.w400,
   ),
 };
@@ -138,7 +146,7 @@ class ClockTheme {
   static final String light = 'light';
   static final String dark = 'dark';
   final String _mode;
-  // String _hightlightedColor;
+  // String _highlightedColor;
 
   ClockTheme(this._mode);
 
