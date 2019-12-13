@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:challenge_digital_clock/clock_theme.dart';
+import 'package:challenge_digital_clock/clock_theme_dark.dart';
+import 'package:challenge_digital_clock/clock_theme_light.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clock_helper/model.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -45,16 +47,21 @@ class _DigitalClockState extends State<DigitalClock> {
 
   @override
   Widget build(BuildContext context) {
-    final themeMode = Theme.of(context).brightness == Brightness.light
-        ? ClockTheme.light
-        : ClockTheme.dark;
-    ClockTheme _theme = ClockTheme(themeMode);
+    // final highlightedColor = 'red';
+    // final highlightedColor = 'green';
+    final highlightedColor = 'blue';
+    final _theme = Theme.of(context).brightness == Brightness.light
+        ? ClockThemeLight(highlightedColor)
+        : ClockThemeDark(highlightedColor);
     final hour =
         DateFormat(widget.model.is24HourFormat ? 'HH' : 'hh').format(_dateTime);
     final minute = DateFormat('mm').format(_dateTime);
+    final hourFormatLabel = DateFormat('a').format(_dateTime);
     final weekName = DateFormat('EEEE,').format(_dateTime);
     final restDate = DateFormat('LLLL d, y').format(_dateTime);
     final weatherIcon = _getWeatherIcon(_theme);
+    final temperature = _formatTemperature(widget.model.temperature);
+    final hourFormat = !widget.model.is24HourFormat ? hourFormatLabel : '';
 
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
@@ -65,7 +72,7 @@ class _DigitalClockState extends State<DigitalClock> {
             child: Stack(
               children: <Widget>[
                 Positioned(
-                  left: _calcCenter(350, constraints),
+                  left: _calcHorizontalCenter(350, constraints),
                   top: -100,
                   width: 350,
                   height: 350,
@@ -78,7 +85,7 @@ class _DigitalClockState extends State<DigitalClock> {
                   ),
                 ),
                 Positioned(
-                  left: _calcCenter(400, constraints),
+                  left: _calcHorizontalCenter(400, constraints),
                   top: -10,
                   width: 400,
                   height: 220,
@@ -94,7 +101,7 @@ class _DigitalClockState extends State<DigitalClock> {
                   ),
                 ),
                 Positioned(
-                  left: _calcCenter(200, constraints),
+                  left: _calcHorizontalCenter(200, constraints),
                   bottom: 20,
                   width: 200,
                   height: 150,
@@ -110,14 +117,38 @@ class _DigitalClockState extends State<DigitalClock> {
                   ),
                 ),
                 Positioned(
+                  top: _calcVerticalCenter(70, constraints),
+                  right: 15,
+                  height: 70,
+                  child: ClipRect(
+                    child: Container(
+                      alignment: Alignment.center,
+                      child: Text(
+                        hourFormat,
+                        textAlign: TextAlign.center,
+                        style: _theme.hourFormat,
+                      ),
+                    ),
+                  ),
+                ),
+                Positioned(
                   top: 0,
                   left: 0,
                   child: Container(
                     padding: EdgeInsets.all(15),
-                    child: Text(
-                      widget.model.temperatureString,
-                      textAlign: TextAlign.right,
-                      style: _theme.temperature,
+                    child: Row(
+                      children: <Widget>[
+                        Text(
+                          temperature,
+                          textAlign: TextAlign.right,
+                          style: _theme.temperature,
+                        ),
+                        Text(
+                          widget.model.unitString,
+                          textAlign: TextAlign.right,
+                          style: _theme.temperatureUnit,
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -203,9 +234,15 @@ class _DigitalClockState extends State<DigitalClock> {
     });
   }
 
-  double _calcCenter(double width, BoxConstraints constraints) {
+  double _calcHorizontalCenter(double width, BoxConstraints constraints) {
     double containerWidth = constraints.constrainWidth();
     double center = (containerWidth - width) / 2;
+    return center;
+  }
+
+  double _calcVerticalCenter(double height, BoxConstraints constraints) {
+    double containerHeight = constraints.constrainHeight();
+    double center = (containerHeight - height) / 2;
     return center;
   }
 
@@ -222,5 +259,14 @@ class _DigitalClockState extends State<DigitalClock> {
       color: theme.color,
       semanticsLabel: name,
     );
+  }
+
+  String _formatTemperature(double value) {
+    final parts = value.toString().split('.');
+    final decimal = int.parse(parts.last);
+    if (decimal == 0) {
+      return parts.first;
+    }
+    return value.toStringAsFixed(1);
   }
 }
