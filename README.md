@@ -1,15 +1,23 @@
 # Flutter Clock
 
-Welcome to Flutter Clock!
+This is my participation for the [Flutter Clock Challenge](https://flutter.dev/clock)!
 
-See [flutter.dev/clock](https://flutter.dev/clock) for how to get started, submission requirements, contest rules, and FAQs.
+## Screenshots
 
-See a [live demo](https://maryx.github.io/flutter_clock) with Flutter for Web!
+### Light mode
 
-Example [Analog Clock](analog_clock)
+![Light mode](challenge_digital_light.png)
 
-<img src='analog_clock/analog.gif' width='350'>
+### Dark mode
 
-Example [Digital Clock](digital_clock)
+![Dark mode](challenge_digital_dark.png)
 
-<img src='digital_clock/digital.gif' width='350'>
+## Credits
+
+Fonts: 
+
+* [Montserrat](https://fonts.google.com/specimen/Montserrat)
+
+Icons:
+
+* [erikflowers/weather-icons](https://github.com/erikflowers/weather-icons)

@@ -1,4 +1,4 @@
-import 'package:challenge_digital_clock/clock_theme.dart';
+import 'package:digital_clock/clock_theme.dart';
 import 'package:flutter/material.dart';
 
 Color _darkColor = Colors.white;

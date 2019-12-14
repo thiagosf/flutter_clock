@@ -1,4 +1,4 @@
-package com.example.challenge_digital_clock
+package com.example.digital_clock
 
 import android.os.Bundle
 
